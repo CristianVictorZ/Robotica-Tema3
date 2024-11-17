@@ -3,6 +3,7 @@ Această temă reprezintă un joc de tip QuickTime. Fiecare jucător va avea but
 
 ## Componente
 6x LED-uri (2 grupuri de câte 3 leduri, în cadrul unui grup trebuie să avem culori diferite)
+
 2x LED RGB (1 pentru fiecare jucător)
 6x butoane (3 pentru fiecare jucător)
 1x LCD
