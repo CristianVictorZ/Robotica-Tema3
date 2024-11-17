@@ -1,0 +1,35 @@
+PARAMETRII:
+
+    o De date
+        - data - byte ce contine bitii corespunzatorii led-ului curent aprins
+        - dataSent - byte ce contine datele trimise catre master prin SPI
+
+    o De stare
+        - idle - 1 daca jocul e in repaus, 0 altfel
+        - wait - 1 daca jocul e in pauza dintre runde, 0 altfel
+        - toneChanging - 1 daca sunetul emis de buzzer isi modifica frecventa pe parcurs, 0 altfel
+
+    o Pentru rularea jocului
+        - valueAnalog - memoreaza valorile citie de pe pinii analog
+        - playerRound - 1 daca e randul jucatorului 2, 0 daca randul jucatorului 1
+        - frequency - frecventa sunetului generat de buzzer
+
+    o Pentru durata
+        - soundDuration - durata sunetului emis de buzzer
+        - toneChangeInterval - intervalul la care se modifica frecventa emis de buzzer
+
+    o Pentru momente memorate
+        - soundStart - momentul la care a inceput sunetul generat de buzzer
+        - lastToneChange - momentul la care s-a modificat ultima data frecventa buzzer-ului
+
+DESCRIERE COD:
+
+    Programul va fi in stare idle cat timp primeste de la master 255. Cat e in stare idle va trimite catre master 0 daca nu e nici un
+buton apasat. Cat timp placa slave e in stare idle, va citi valorile ambilor pini analog. Daca aceste valori se modifica inseamna ca un 
+buton a fost apasat si va trimite prin SPI 15 pentru a informa master-ul de acest lucru. Cat nu e in stare idle va verifica daca jocul
+e in pauza. Daca e in pauza (a primit 240 sau 241 de la master) led-urile vor fi stinse si prin SPI se va trimite 0. Daca nu e in pauza
+(a primit orice altceva), va aprinde led-ul corespunzator datelor primite de la master si va citi valorile de la pinul analog corespunzator
+jucatorului curent. In functie de valoarea citita, programul va crea un byte da date cu biti care corespund butonului apasat. Daca acesta
+a fost raspunsul corect dat de jucator, master-ul va trimite 241 catre slave ca acesta sa genereze un sunet. Daca raspunsul a fost gresit,
+master-ul va trimite 112 ca slave-ul sa genereze un sunet corespunzator. Cand jocul se termina, programul va primi din nou 255 de pe SPI,
+indicand-ui sa intre din nou in starea de repaus.
