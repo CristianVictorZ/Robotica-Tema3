@@ -1,0 +1,54 @@
+PARAMETRII:
+
+    o De date
+        -data - variabila memoreaza biti care corespund jucatorului al carui rand este si led-ului aprins pentru jucatorul respectiv
+        -dataReceived - variabila memoreaza byte-ul primit prin SPI
+        -dataSent - variabila memoreaza byte-ul trimis prin SPI
+        -previousData - variabila memoreaza ultimul byte primit prin SPI
+        -vectorBits - variabila memoreaza 3 valori necesare in calcularea variabilei "data"
+        
+    o De stare
+        -running - 1 daca ruleaza, 0 daca e in repaus
+        -ending - 1 daca jocul e in starea de finalizare, 0 altfel
+        -nameReading - 1 daca jocul e in starea de citit nume, 0 altfel
+
+    o Pentru nume
+        -name - matrice cu 2 linii; fiecare linie memoreaza numele unui jucator
+        -nameIndex - memoreaza linia curenta a matricei "name" cand sunt citie numele
+        -index - memoreaza coloana curenta a matricei "name" cand sunt citie numele
+
+    o Pentru rularea jocului
+        -turn - 1 daca e randul jucatorului 2, 0 daca randul jucatorului 1
+        -scoreP1 - memoreaza scorul jucatorului 1
+        -scoreP2 - memoreaza scorul jucatorului 2
+        -line - sir de caractere folosit pentru printarea pe lcd
+        -_241ToSend - de cate ori se va trimite 241 pe SPI catre slave (o data nu era destul ca slave-ul sa citeasca valoarea)
+        -rightAnswer - 1 daca a fost dat un raspuns corect, 0 altfel
+        -angle - memoreaza unghiul la care trebuie intors servo-ul
+
+    o Pentru durata
+        -gameTime - durata jocului
+        -answerTime - durata unei runde
+        -breakTime - durata pauzei dintre runde
+        -startDebounce - durata pentru care trebuie apasat un buton ca jocul sa inceapa
+        -transferInterval - intervalul la care se trimite ceva prin SPI
+        -finishTime - durata de finalizare
+
+    o Petnru memorat momente
+        -lastDataSent - momentul la care s-a afisat ultima data ceva pe terminal de la functia debug
+        -lastAnswer - momentul la care a fost dat ultimul raspuns
+        -statTime - momentul la care a inceput jocul
+        -lastStartValue - momentul cand a primit prima data 15 prin SPI (pentru debounce la inceperea jocului)
+        -lastTransfer - momentul la care a fost facut ultimul transfer pe SPI
+        -endTime - momentul finalizarii jocului
+
+DESCRIERE COD:
+
+    Placa Master va trimite la un anumit interval date prin SPI. In starea de repau va trimite 255 catre slave, indicand-ui ca este idle.
+Daca primeste valoarea 15 pentru o perioada de timp jocul va incepe si va astepta introducerea numelor jucatorilor in terminal (4 caractere
+fiecare). Va genera date de trimis prin functia "generateData" si le va trimite la slave. In functie de ce va primi de la slave,
+raspunsul va varia: 241 pentru un raspuns corect, 112 pentru un raspuns gresit, 240 in timpul pauzei dintre runde. Daca timpul de 
+raspuns expira, va incepe sa trimita direct 240. Daca raspunsul a fost corect, se va calcula scorul obtinut de jucatorul curent si 
+acesta se va afisa pe lcd. La inceperea rundei noi se va afisa scorul ambilor jucatori. Pe parcursul jocului servo motorul va indica
+timpul ramas de joc. La finalizare, servo-ul se intoarce la unghiul initial (90 de grade), si, pentru un scurt timp, pe lcd vor fi afisate
+scorurile ambilor jucatori si castigatorul. Dupa aceea lcd-ul se intoarce la ecranul de "Welcome" si jocul poate fi pornit din nou.
