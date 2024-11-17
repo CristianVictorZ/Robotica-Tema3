@@ -28,7 +28,7 @@ Fire de legatura
 
 ## Descriere
 
-
+Jocul pornește cu afișarea unui mesaj de bun venit pe LCD. Apăsarea lunga a oricărui buton declanșează startul jocului. La început, vor trebui introduse în terminal numele celor 2 jucători (4 caractere fiecare). Fiecare jucător are trei butoane, fiecare asociat unui LED de o culoare diferită și un al 4-lea LED RGB. La fiecare rundă, fiecare jucător este cel activ. LED-ul RGB al jucătorului activ se aprinde într-o culoare corespunzătoare unuia dintre butoanele sale. Jucătorul trebuie să apese cât mai rapid butonul care corespunde culorii LED-ului RGB, pentru a obține puncte. Cu cât reacționează mai repede, cu atât primește mai multe puncte. La apăsarea unui buton, in funcție de dacă acesta a fost cel corect sau nu, buzzer-ul va genera un sunet pentru a indica acest lucru. La finalul unei runde LCD-ul afișează punctajul actualizat al ambilor jucători. Pe tot parcursul jocului display-ul LCD va arata punctajul fiecărui jucător. Servomotorul se rotește pe parcursul jocului, indicând progresul. O rotație completă a servomotorului marchează sfârșitul jocului. La final, LCD-ul afișează numele câștigătorului și scorul final pentru câteva secunde, apoi revine la ecranul de start cu mesajul de bun venit.
 
 ## Montaj
 
@@ -36,3 +36,4 @@ Fire de legatura
 
 # Video
 
+[<img src="https://img.youtube.com/vi/5c6IaWx1PC0/maxresdefault.jpg">](https://youtu.be/5c6IaWx1PC0)
